@@ -53,6 +53,7 @@ function init() {
   showQuestion();
 }
 
+
 function showQuestion() {
   if (gameIsOver()) {
     showEndScreen();
@@ -62,9 +63,11 @@ function showQuestion() {
   }
 }
 
-function gameIsOver(){
+
+function gameIsOver() {
   return currentQuestion >= questions.length;
 }
+
 
 function showNextQuestion() {
   let question = questions[currentQuestion];
@@ -76,12 +79,14 @@ function showNextQuestion() {
   document.getElementById("answer_4").innerHTML = question["answer_4"];
 }
 
+
 function updateProgressBar() {
   let percent = currentQuestion / questions.length;
   percent = Math.round(percent * 100);
   document.getElementById("progress-bar").innerHTML = `${percent} %`;
   document.getElementById("progress-bar").style = `width: ${percent}%;`;
 }
+
 
 function showEndScreen() {
   document.getElementById("endScreen").classList.remove("d-none");
@@ -93,6 +98,7 @@ function showEndScreen() {
   document.getElementById("progress-bar").style = `width: 100%;`;
 }
 
+
 function answer(selection) {
   let question = questions[currentQuestion];
   let selectedQuestionNumber = selection.slice(-1);
@@ -101,24 +107,32 @@ function answer(selection) {
     document.getElementById(selection).parentNode.classList.add("bg-success");
     rightAnswersCount++;
     AUDIO_SUCCESS.play();
+
   } else {
     document.getElementById(selection).parentNode.classList.add("bg-danger");
-    document.getElementById("answer_" + question["right_answer"]).parentNode.classList.add("bg-success");
+    document
+      .getElementById("answer_" + question["right_answer"])
+      .parentNode.classList.add("bg-success");
     AUDIO_FAIL.play();
+
   }
   document.getElementById("next-button").disabled = false;
+  removeClickAnswers();
 }
 
-function rightAnswerSelected(selectedQuestionNumber, question){
+
+function rightAnswerSelected(selectedQuestionNumber, question) {
   return selectedQuestionNumber == question["right_answer"];
 }
 
+
 function nextQuestion() {
-  currentQuestion++; // z.B. von 0 auf 1
+  currentQuestion++;
   document.getElementById("next-button").disabled = true;
   resetAnswerButtons();
-  showQuestion(); // render nächste Frage
+  showQuestion();
 }
+
 
 function resetAnswerButtons() {
   document.getElementById("answer_1").parentNode.classList.remove("bg-success");
@@ -129,7 +143,9 @@ function resetAnswerButtons() {
   document.getElementById("answer_2").parentNode.classList.remove("bg-danger");
   document.getElementById("answer_3").parentNode.classList.remove("bg-danger");
   document.getElementById("answer_4").parentNode.classList.remove("bg-danger");
+  addClickAnswers();
 }
+
 
 function restartGame() {
   document.getElementById("header-image").src = "./img/background.jpg";
@@ -138,4 +154,18 @@ function restartGame() {
   rightAnswersCount = 0;
   currentQuestion = 0;
   init();
+}
+
+function removeClickAnswers() {
+  document.getElementById("answer_1").parentNode.classList.add("no-click");
+  document.getElementById("answer_2").parentNode.classList.add("no-click");
+  document.getElementById("answer_3").parentNode.classList.add("no-click");
+  document.getElementById("answer_4").parentNode.classList.add("no-click");
+}
+
+function addClickAnswers() {
+  document.getElementById("answer_1").parentNode.classList.remove("no-click");
+  document.getElementById("answer_2").parentNode.classList.remove("no-click");
+  document.getElementById("answer_3").parentNode.classList.remove("no-click");
+  document.getElementById("answer_4").parentNode.classList.remove("no-click");
 }

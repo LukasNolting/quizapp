@@ -1,42 +1,42 @@
 let questions = [
   {
-    question: "Welches Land ist das flächenmäßig größte der Welt?",
-    answer_1: "Russland",
-    answer_2: "USA",
-    answer_3: "China",
-    answer_4: "Indien",
+    question: "Welcher Kontinent ist der größte?",
+    answer_1: "Afrika",
+    answer_2: "Europa",
+    answer_3: "Asien",
+    answer_4: "Nordamerika",
+    right_answer: 3,
+  },
+  {
+    question: "Welcher Ozean liegt östlich von Afrika?",
+    answer_1: "Atlantischer Ozean",
+    answer_2: "Indischer Ozean",
+    answer_3: "Pazifischer Ozean",
+    answer_4: "Südlicher Ozean",
+    right_answer: 2,
+  },
+  {
+    question: "Was ist die Hauptstadt von Deutschland?",
+    answer_1: "Paris",
+    answer_2: "Berlin",
+    answer_3: "Rom",
+    answer_4: "Madrid",
+    right_answer: 2,
+  },
+  {
+    question: "Welcher Fluss fließt durch Ägypten?",
+    answer_1: "Nil",
+    answer_2: "Rhein",
+    answer_3: "Amazonas",
+    answer_4: "Mississippi",
     right_answer: 1,
   },
   {
-    question: "In welchem Ozean liegt die Inselgruppe Hawaii?",
-    answer_1: "Atlantik",
-    answer_2: "Indischer Ozean",
-    answer_3: "Südlicher Ozean",
-    answer_4: "Pazifischer Ozean",
-    right_answer: 4,
-  },
-  {
-    question: "Was ist die Hauptstadt von Australien?",
-    answer_1: "Sydney",
-    answer_2: "Melbourne",
-    answer_3: "Canberra",
-    answer_4: "Brisbane",
-    right_answer: 3,
-  },
-  {
-    question: "Welcher Fluss fließt durch Paris?",
-    answer_1: "Themse",
-    answer_2: "Donau",
-    answer_3: "Seine",
-    answer_4: "Rhein",
-    right_answer: 3,
-  },
-  {
-    question: "Welches Gebirge trennt Europa von Asien?",
-    answer_1: "Alpen",
-    answer_2: "Himalaya",
-    answer_3: "Ural",
-    answer_4: "Anden",
+    question: "Welches Land liegt südlich von Australien?",
+    answer_1: "Kanada",
+    answer_2: "Indien",
+    answer_3: "Neuseeland",
+    answer_4: "Mexiko",
     right_answer: 3,
   },
 ];
@@ -53,7 +53,6 @@ function init() {
   showQuestion();
 }
 
-
 function showQuestion() {
   if (gameIsOver()) {
     showEndScreen();
@@ -63,11 +62,9 @@ function showQuestion() {
   }
 }
 
-
 function gameIsOver() {
   return currentQuestion >= questions.length;
 }
-
 
 function showNextQuestion() {
   let question = questions[currentQuestion];
@@ -79,14 +76,12 @@ function showNextQuestion() {
   document.getElementById("answer_4").innerHTML = question["answer_4"];
 }
 
-
 function updateProgressBar() {
   let percent = currentQuestion / questions.length;
   percent = Math.round(percent * 100);
   document.getElementById("progress-bar").innerHTML = `${percent} %`;
   document.getElementById("progress-bar").style = `width: ${percent}%;`;
 }
-
 
 function showEndScreen() {
   document.getElementById("endScreen").classList.remove("d-none");
@@ -98,7 +93,6 @@ function showEndScreen() {
   document.getElementById("progress-bar").style = `width: 100%;`;
 }
 
-
 function answer(selection) {
   let question = questions[currentQuestion];
   let selectedQuestionNumber = selection.slice(-1);
@@ -107,24 +101,20 @@ function answer(selection) {
     document.getElementById(selection).parentNode.classList.add("bg-success");
     rightAnswersCount++;
     AUDIO_SUCCESS.play();
-
   } else {
     document.getElementById(selection).parentNode.classList.add("bg-danger");
     document
       .getElementById("answer_" + question["right_answer"])
       .parentNode.classList.add("bg-success");
     AUDIO_FAIL.play();
-
   }
   document.getElementById("next-button").disabled = false;
   removeClickAnswers();
 }
 
-
 function rightAnswerSelected(selectedQuestionNumber, question) {
   return selectedQuestionNumber == question["right_answer"];
 }
-
 
 function nextQuestion() {
   currentQuestion++;
@@ -132,7 +122,6 @@ function nextQuestion() {
   resetAnswerButtons();
   showQuestion();
 }
-
 
 function resetAnswerButtons() {
   document.getElementById("answer_1").parentNode.classList.remove("bg-success");
@@ -145,7 +134,6 @@ function resetAnswerButtons() {
   document.getElementById("answer_4").parentNode.classList.remove("bg-danger");
   addClickAnswers();
 }
-
 
 function restartGame() {
   document.getElementById("header-image").src = "./img/background.jpg";
